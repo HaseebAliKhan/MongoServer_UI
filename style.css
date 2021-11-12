@@ -1,0 +1,72 @@
+.form{
+    margin: 10px;
+    padding: 40px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    background-color:rgb(238, 235, 221) !important;
+}
+.but{
+   
+   align-items: center !important;
+    color: rgb(216, 182, 164) !important;
+    background-color: rgb(99, 0, 0) !important;
+    border: hidden ;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.tab{
+    margin: 10px;
+    padding: 40px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    background-color: rgb(238, 235, 221)!important;
+}
+.t{
+    color: rgb(216, 182, 164) !important;
+    
+}
+.col{
+    color: rgb(99, 0, 0) !important;
+}
+.hed{
+    text-align: center !important;
+    color: rgb(99, 0, 0) !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.status{
+    height: 80px !important;
+}
+.sus{
+    text-align: center !important;
+    
+   
+}
+.edt{
+    align-items: center !important;
+    color: rgb(99, 0, 0) !important;
+    background-color: rgb(216, 182, 164) !important;
+    border: hidden ;
+    border-radius: 5px;
+    padding: 10px;
+    
+}
+.del{
+    align-items: center !important;
+    color: rgb(216, 182, 164) !important;
+    background-color: rgb(99, 0, 0) !important;
+    border: hidden ;
+    border-radius: 5px;
+    padding: 10px;
+    
+}
+.inbox{
+    background-color:rgb(238, 235, 221) !important;
+    
+}
+.boxhad{
+    text-align: center !important;
+}
+.modaltl{
+    color: rgb(99, 0, 0) !important;
+}
