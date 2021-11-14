@@ -50,16 +50,20 @@
                 </tr>
             </thead>
             <tbody id="table">
-
+               
 
             </tbody>
         </table>
     </div>
 
-   <div id="modal">
-    
-   </div>
- 
+    <div id="modal">
+
+    </div>
+
+    <div id="delete">
+
+    </div>
+
 
 
 
@@ -75,39 +79,83 @@
 
 
     <script>
-        const get = () => {
-            axios.get('https://mongodbserver1.herokuapp.com/users')
-                .then(function (response) {
-                    
-                    document.getElementById("table").innerHTML = ""
-                    response.data.map((res, index) => {
-                        document.getElementById("table").innerHTML += `
+        
+            async function get() {
+                document.getElementById("table").innerHTML =`
+            <tr>
+
+<td>
+    <p class="placeholder-glow">
+        <span class="placeholder col-12"></span>
+    </p>
+
+    <p class="placeholder-wave">
+        <span class="placeholder col-12"></span>
+    </p>
+</td>
+<td>
+    <p class="placeholder-glow">
+        <span class="placeholder col-12"></span>
+    </p>
+
+    <p class="placeholder-wave">
+        <span class="placeholder col-12"></span>
+    </p>
+</td>
+<td>
+    <p class="placeholder-glow">
+        <span class="placeholder col-12"></span>
+    </p>
+
+    <p class="placeholder-wave">
+        <span class="placeholder col-12"></span>
+    </p>
+</td>
+<td>
+    <p class="placeholder-glow">
+        <span class="placeholder col-12"></span>
+    </p>
+
+    <p class="placeholder-wave">
+        <span class="placeholder col-12"></span>
+    </p>
+</td>
+</tr>
+            `
+  try {
+    const response = await axios.get('https://mongodbserver1.herokuapp.com/users');
+    
+        
+    
+    document.getElementById("table").innerHTML = ""
+                        response.data.map((res, index) => {
+                            document.getElementById("table").innerHTML += `
             
                 <tr>
                    
                     <td>${res.name}</td>
                     <td>${res.email}</td>
                     <td>${res.pass}</td>
-                    <td><button type="button" class="edt"  data-bs-toggle="modal"  data-bs-target="#exampleModal">Edit</button>
-                        <div class="modal fade box" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <td><button type="button" class="edt"  data-bs-toggle="modal"  data-bs-target="#${'exampleModal' + res._id}">Edit</button>
+                        <div class="modal fade box" id="${'exampleModal' + res._id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content inbox">
                 <div class="modal-header boxhad">
-                    <h5 class="modal-title modaltl" id="exampleModalLabel ">Update Data</h5>
+                    <h5 class="modal-title modaltl" id="${'exampleModalLabel' + res._id}">Update Data</h5>
                     <button type="button" class="btn-close x" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3 ">
                         <label for="name" class="form-label col">Name</label>
-                        <input type="email" class="form-control" id="name2" placeholder="name">
+                        <input type="email" class="form-control" id="${'name' + res._id}" placeholder="name" value="${res.name}">
                     </div>
                     <div class="mb-3 ">
                         <label for="email" class="form-label col">Email address</label>
-                        <input type="text" class="form-control" id="email2" placeholder="name@example.com">
+                        <input type="text" class="form-control" id="${'email' + res._id}" placeholder="name@example.com" value="${res.email}" >
                     </div>
                     <div class="mb-3 ">
                         <label for="pass" class="form-label col">Password</label>
-                        <input type="text" class="form-control" id="pass2" placeholder="Password">
+                        <input type="text" class="form-control" id="${'pass' + res._id}" placeholder="Password" value="${res.pass}">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -118,18 +166,44 @@
         </div>
     </div>
     
-                        <button type="button" class="del" onClick="del('${res._id}')">Delete</button></td>
+                        
+                        <!-- Button trigger modal -->
+<button type="button" class="del" data-bs-toggle="modal" data-bs-target="#${"staticBackdrop" + res._id}">
+    Delete
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="${"staticBackdrop" + res._id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content inbox">
+      <div class="modal-header boxhad">
+        <h5 class="modal-title modaltl" id="${"staticBackdropLabel" + res._id}">Delete User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body modaltl">
+        Do You Want To Delete This User
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="edt" data-bs-dismiss="modal">No</button>
+        <button type="button" class="del" data-bs-dismiss="modal" onClick="delbut('${res._id}')">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+                        </td>
                 </tr>
                 
-            `
-                    })
-                    console.log(response.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+            `})
+            
+            
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+            
 
-        }
+        
         const postdata = () => {
             let name = document.getElementById("name").value
             let email = document.getElementById("email").value
@@ -139,9 +213,9 @@
                 name, email, pass
             })
                 .then(function (response) {
-                    document.getElementById("name").value = ''
-                    document.getElementById("email").value = ''
-                    document.getElementById("pass").value = ''
+                    document.getElementById("name").value = ""
+                    document.getElementById("email").value = ""
+                    document.getElementById("pass").value = ""
 
                     get()
 
@@ -164,28 +238,28 @@
 
 
         // const edit = (_id,name,email,pass) => {
-            
-            
+
+
         //     updat(_id,name,email,pass)
-            
-            
-                
-            
+
+
+
+
         // }
 
 
-        const  updat=(_id,name,email,pass)=>{
+        const updat = (_id, name, email, pass) => {
             console.log(name)
-            name = document.getElementById("name2").value,
-                email = document.getElementById("email2").value,
-                pass = document.getElementById("pass2").value
-            axios.put(`https://mongodbserver1.herokuapp.com/users/${_id}`,{
+            name = document.getElementById(`name${_id}`).value
+            email = document.getElementById(`email${_id}`).value
+            pass = document.getElementById(`pass${_id}`).value
+            axios.put(`https://mongodbserver1.herokuapp.com/users/${_id}`, {
                 name, email, pass
             })
                 .then(function (response) {
-                    document.getElementById("name2").value = ''
-                    document.getElementById("email2").value = ''
-                    document.getElementById("pass2").value = ''
+                    document.getElementById(`name${_id}`).value = ''
+                    document.getElementById(`email${_id}`).value = ''
+                    document.getElementById(`pass${_id}`).value = ''
                     document.getElementById("stat").innerHTML = `<div class="alert alert-warning sus" role="alert">
   User Was Updated
   
@@ -194,19 +268,22 @@
                         document.getElementById("stat").innerHTML = ""
                     }, 1000);
                     get()
-                    console.log(response,name, email, pass);
+                    console.log(response, name, email, pass);
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-          }
+        }
 
 
 
 
 
-        
-        const del = (_id) => {
+
+        const delbut = (_id) => {
+
+
+
             axios.delete(`https://mongodbserver1.herokuapp.com/users/${_id}`)
                 .then(function (response) {
                     document.getElementById("stat").innerHTML = `<div class="alert alert-danger sus" role="alert">
